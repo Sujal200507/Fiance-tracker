@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -12,7 +12,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { supabase } from "@/supabase";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HttpsIcon from "@mui/icons-material/Https";
@@ -25,6 +25,15 @@ export default function NewPassword() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isRecovery = searchParams.get("recovery") === "1";
+
+  useEffect(() => {
+    if (!isRecovery) {
+      // If not in recovery mode, redirect to dashboard or show error
+      router.replace("/dashboard");
+    }
+  }, [isRecovery, router]);
 
   const handleSetNewPassword = async () => {
     if (!newPassword || !confirmPassword) {

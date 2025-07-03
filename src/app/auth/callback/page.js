@@ -26,7 +26,7 @@ function CallbackContent() {
         if (error) {
           setError(error.message);
         } else {
-          router.replace("/auth/new-password");
+          router.replace("/auth/new-password?recovery=1");
         }
       } else {
         setError("Invalid or missing recovery parameters.");
