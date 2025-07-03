@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+
+import { useState, useEffect, Suspense } from "react";
 import {
   Container,
   Grid,
@@ -19,7 +21,7 @@ import HttpsIcon from "@mui/icons-material/Https";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "./newpass.module.css";
 
-export default function NewPassword() {
+function NewPasswordContent() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -30,7 +32,6 @@ export default function NewPassword() {
 
   useEffect(() => {
     if (!isRecovery) {
-      // If not in recovery mode, redirect to dashboard or show error
       router.replace("/dashboard");
     }
   }, [isRecovery, router]);
@@ -198,3 +199,26 @@ const inputStyles = (error) => ({
     color: error ? "#d32f2f" : "white",
   },
 });
+
+export default function NewPassword() {
+  return (
+    <Suspense
+      fallback={
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress size={48} sx={{ mb: 2 }} />
+          <Typography variant="h6">Loading...</Typography>
+        </Box>
+      }
+    >
+      <NewPasswordContent />
+    </Suspense>
+  );
+}
