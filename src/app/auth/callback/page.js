@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic";
+
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/supabase";
 import { CircularProgress, Box, Typography } from "@mui/material";
 
-export default function AuthCallback() {
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [error, setError] = useState(null);
@@ -50,5 +52,18 @@ export default function AuthCallback() {
       <CircularProgress size={48} sx={{ mb: 2 }} />
       <Typography variant="h6">Processing password reset...</Typography>
     </Box>
+  );
+}
+
+export default function AuthCallback() {
+  return (
+    <Suspense fallback={
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+        <CircularProgress size={48} sx={{ mb: 2 }} />
+        <Typography variant="h6">Loading...</Typography>
+      </Box>
+    }>
+      <CallbackContent />
+    </Suspense>
   );
 } 
