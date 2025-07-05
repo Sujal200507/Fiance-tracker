@@ -1,4 +1,4 @@
-# Spend Snap - Personal Finance Tracker
+# Budget Buddy - Personal Finance Tracker
 
 A modern, responsive web application for tracking personal income and expenses with budget management and financial insights.
 
@@ -53,7 +53,7 @@ A modern, responsive web application for tracking personal income and expenses w
 ## 📁 Project Structure
 
 ```
-Spend-Snap/
+Budget-Buddy/
 ├── src/
 │   ├── app/
 │   │   ├── auth/                 # Authentication pages
